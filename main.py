@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 import koreanize_matplotlib
 
 # 데이터 로드
-file_path = '202406_202406_연령별인구현황_월간.csv'
+file_path = '202406_202406_연령별인구현황_월간.csv'
 data = pd.read_csv(file_path, encoding='euc-kr')
 
 # 중학생 연령대 추출
@@ -18,16 +18,10 @@ selected_region = st.selectbox('지역을 선택하세요:', data['행정구역'
 region_data = data[data['행정구역'] == selected_region]
 
 # 중학생 연령대 인구수 합계
-# 컬럼이 존재하는지 확인 후 쉼표 제거 및 정수형 변환
-try:
-    middle_school_population = region_data[middle_school_ages].apply(lambda x: x.str.replace(',', '').astype(int)).sum(axis=1).values[0]
-    total_population = int(region_data['2024년06월_계_총인구수'].str.replace(',', '').values[0])
-except KeyError as e:
-    st.error(f"데이터에 오류가 있습니다: {e}")
-    st.stop()
-except ValueError as e:
-    st.error(f"데이터 변환에 실패했습니다: {e}")
-    st.stop()
+middle_school_population = region_data[middle_school_ages].apply(lambda x: x.str.replace(',', '').astype(int)).sum(axis=1).values[0]
+
+# 총 인구수
+total_population = int(region_data['2024년06월_계_총인구수'].str.replace(',', '').values[0])
 
 # 비율 계산
 middle_school_ratio = (middle_school_population / total_population) * 100
@@ -35,7 +29,7 @@ middle_school_ratio = (middle_school_population / total_population) * 100
 # 원 그래프 생성
 labels = ['중학생 연령대', '기타 연령대']
 sizes = [middle_school_ratio, 100 - middle_school_ratio]
-colors = ['#ff9999', '#66b3ff']
+colors = ['#ff9999','#66b3ff']
 explode = (0.1, 0)
 
 fig1, ax1 = plt.subplots()
