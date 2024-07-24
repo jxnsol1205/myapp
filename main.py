@@ -11,7 +11,7 @@ if uploaded_file is not None:
     data = pd.read_csv(uploaded_file, encoding='euc-kr')
 
     # 중학생 연령대 추출
-    middle_school_ages = ['2024년06월_계_12세', '2024년06월_계_13세', '2024년06월_계_14세']
+    middle_school_ages = ['2024년06월_계_17세', '2024년06월_계_18세', '2024년06월_계_19세']
 
     # 지역 선택
     selected_region = st.selectbox('지역을 선택하세요:', data['행정구역'].unique())
